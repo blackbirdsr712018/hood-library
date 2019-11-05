@@ -15,44 +15,61 @@ router.get('/classes', (req, res) => {
         {
             id: '000',
             name:'Computer science, information and general works',
-            title: 'Computer science'
+            title: 'Computer science',
+            image: 'cs.jpg'
         },
         {
             id: '100',
             name:'Philosophy and psychology',
-            title: 'Philosophy'
+            title: 'Philosophy',
+            image: 'ps.jpg',
+            sections:[
+                {id:'000', title:'Computer science'},
+                {id:'010', title:'Bibliographies'},
+                {id:'020', title:'Library & information sciences'},
+                {id:'030', title:'Encyclopedias & books of facts'},
+            ]
         },{
             id: '200',
             name:'Religion',
-            title: 'Religion'
+            title: 'Religion',
+            image: 're.jpg'
+    
         },{
             id: '300',
             name:'Social sciences',
-            title: 'Social sciences'
+            title: 'Social sciences',
+            image: 'sc.jpg'
         },{
             id: '400',
             name:'Language',
-            title: 'Language'
+            title: 'Language',
+            image: 'ln.jpg'
         },{
             id: '500',
             name:' Pure Science',
-            title: ' Science'
+            title: ' Science',
+            image: 'sp.jpg'
         },{
             id: '600',
             name:'Technology',
-            title: 'Technology'
+            title: 'Technology',
+            image: 'tc.jpg'
         },{
             id: '700',
             name:'Arts and recreation',
-            title: 'Arts and recreation'
+            title: 'Arts and recreation',
+            image: 'ar.jpg'
         },{
             id: '800',
             name:'Literature',
-            title: 'Literature'
+            title: 'Literature',
+            image: 'li.jpg'
         },{
             id: '900',
             name:'History and geography',
-            title: 'History and geography'
+            title: 'History and geography',
+            image: 'hi.jpg'
         },
     ]);
 });
