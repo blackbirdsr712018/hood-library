@@ -1,0 +1,26 @@
+version: "3"
+services:
+  # web:
+  #   build: ./web
+  #   ports:
+  #   - 3000:3000
+  #   depends_on:
+  #   - api
+  # api:
+  #   build: ./api
+  #   ports:
+  #   - 8080:8080
+  #   depends_on:
+  #     - mongo
+  mongo:
+    build: ./mongo
+    container_name: 'mongo'
+    environment:
+      - MONGO_INITDB_DATABASE=hood-lib
+      # - MONGO_INITDB_ROOT_USERNAME=admin
+      # - MONGO_INITDB_ROOT_PASSWORD=admin1
+    volumes:
+      - /host_mnt/C/Users/krajnarayanan/source/repos/hood-lib/mongo/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+      - /host_mnt/C/Users/krajnarayanan/source/repos/hood-lib/mongo/hood-lib-data:/data/db
+    ports:
+      - '27017-27019:27017-27019'

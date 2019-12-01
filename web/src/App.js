@@ -3,7 +3,10 @@ import logo from './logo.svg';
 import './App.css';
 import './Classes';
 import Classes from './Classes';
-import Subjects from './Subjects';
+//import Subjects from './Subjects';
+import Landing from './Landing/Landing';
+import Subjects from './categories/Subjects';
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -26,7 +29,7 @@ function App() {
          
           </Route>
           <Route path="/">
-          <Classes></Classes>
+         <Landing> </Landing>
           </Route>
         </Switch>
 
