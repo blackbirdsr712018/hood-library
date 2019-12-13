@@ -2,3 +2,5 @@
 https://medium.com/faun/managing-mongodb-on-docker-with-docker-compose-26bf8a0bbae3
 https://www.digitalocean.com/community/tutorials/how-to-set-up-flask-with-mongodb-and-docker
 https://blog.jeremylikness.com/blog/2018-12-27_mongodb-on-windows-in-minutes-with-docker/
+
+docker-compose up --build --force-recreate --renew-anon-volumes

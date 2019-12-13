@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -15,8 +15,22 @@ import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import Tooltip from '@material-ui/core/Tooltip';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
+import  Footer  from '../common/Footer';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
@@ -49,6 +63,25 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     padding: theme.spacing(3),
   },
+  cardGrid: {
+    paddingTop: theme.spacing(8),
+    paddingBottom: theme.spacing(8),
+  },
+  card: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  cardMedia: {
+    paddingTop: '56.25%', // 16:9
+  },
+  cardContent: {
+    flexGrow: 1,
+  },
+  link: {
+    textDecoration:'none',
+    color:'#FFF'
+  }
 }));
 
 function Subjects(props) {
@@ -56,32 +89,62 @@ function Subjects(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [subjects, setSubjects] = React.useState([]);
+  const [books, setBooks] = React.useState([]);
+  const [subject, setsubject] = React.useState(0);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
+  useEffect(() => {
+    console.log( props.match.params.id);
+    async function fetchData() {
+      const response = await fetch("http://40.76.208.116:8080/deweys/" + props.match.params.id);
+      const data =  await response.json();
+      setSubjects(data.subjects);
+      //debugger;
+      //console.log(tiles);
+    }
+    fetchData();
+    setsubject(10);
+  }, [])
+
+  useEffect(() => {
+    console.log( props.match.params.id);
+    async function fetchData() {
+      const response = await fetch("http://40.76.208.116:8080/books/20/" + subject);
+      const data =  await response.json();
+      setBooks(data);
+      //debugger;
+      console.log(data);
+    }
+    fetchData();
+
+  }, [subject])
+ 
+
+
+
   const drawer = (
     <div>
+      
       <div className={classes.toolbar} />
       <Divider />
       <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
+        {console.log(subjects)}
+        {subjects.map((s, i) => (
+          <Tooltip title={s.title}>
+          <ListItem button key={s.key} onClick={() => {setsubject(subject + 10)}} >
+            <ListItemIcon>{i % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+            <ListItemText primary={s.title.substring(0,18)}  />
+            
           </ListItem>
+          </Tooltip>
         ))}
       </List>
       <Divider />
-      <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
+     
     </div>
   );
 
@@ -100,7 +163,8 @@ function Subjects(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Responsive drawer
+            <Link className={classes.link} to="/">Beneficial-Hodson Library</Link>
+           
           </Typography>
         </Toolbar>
       </AppBar>
@@ -137,29 +201,46 @@ function Subjects(props) {
       </nav>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-          ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent elementum
-          facilisis leo vel. Risus at ultrices mi tempus imperdiet. Semper risus in hendrerit
-          gravida rutrum quisque non tellus. Convallis convallis tellus id interdum velit laoreet id
-          donec ultrices. Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-          adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra nibh cras.
-          Metus vulputate eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo quis
-          imperdiet massa tincidunt. Cras tincidunt lobortis feugiat vivamus at augue. At augue eget
-          arcu dictum varius duis at consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem
-          donec massa sapien faucibus et molestie ac.
+        <Container className={classes.cardGrid} maxWidth="lg">
+          {/* End hero unit */}
+          <Grid container spacing={4}>
+            
+            {books.map(card => (
+             
+              <Grid item key={card.key} xs={12} sm={6} md={4} lg={3}>
+                 {console.log(card)}
+                <Card className={classes.card}>
+                  <CardMedia
+                    className={classes.cardMedia}
+                    image={card.image_url}
+                    
+                    title="Image title"
+                  />
+                  <CardContent className={classes.cardContent}>
+                    <Link style={{ color: 'inherit', textDecoration: 'inherit' }} to={'book/' + card["_id"]} >
+
+
+                      <Typography gutterBottom variant="h5" component="h2">
+                        {card.title}
+                      </Typography>
+                      <Typography>
+                        {card.className}
+                    </Typography>
+                    </Link>
+                  </CardContent>
+                  <CardActions>
+                    
+                  </CardActions>
+                </Card>
+              </Grid>
+            ))} 
+          </Grid>
+          <Typography variant="h6" align="center" gutterBottom>
+          
         </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla
-          facilisi etiam dignissim diam. Pulvinar elementum integer enim neque volutpat ac
-          tincidunt. Ornare suspendisse sed nisi lacus sed viverra tellus. Purus sit amet volutpat
-          consequat mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis risus sed
-          vulputate odio. Morbi tincidunt ornare massa eget egestas purus viverra accumsan in. In
-          hendrerit gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem et
-          tortor. Habitant morbi tristique senectus et. Adipiscing elit duis tristique sollicitudin
-          nibh sit. Ornare aenean euismod elementum nisi quis eleifend. Commodo viverra maecenas
-          accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography>
+        <Footer/>
+        </Container>
+      
       </main>
     </div>
   );

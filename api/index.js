@@ -21,6 +21,8 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 require('./app/routes/note.routes.js')(app);
 require('./app/routes/material.routes.js')(app);
+require('./app/routes/dewey.routes.js')(app);
+require('./app/routes/book.routes.js')(app);
 // Launch app to listen to specified port
 app.listen(port, function () {
      console.log("Running RestHub on port " + port);

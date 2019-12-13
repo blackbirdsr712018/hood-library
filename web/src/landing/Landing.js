@@ -29,6 +29,11 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 import { red } from '@material-ui/core/colors';
 import Icon from '@material-ui/core/Icon';
 
+import  Footer  from '../common/Footer';
+
+
+
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -146,16 +151,17 @@ export default function Landing() {
     //     console.log(tilesx);
     //   });
 async function fetchData() {
-    const response = await fetch("http://localhost:8080/api/floors");
+  //const response = await fetch("http://localhost:8080/materials");
+    const response = await fetch("http://40.76.208.116:8080/materials");
     const data =  await response.json();
     setTiles(data);
-    debugger;
-    console.log(tiles);
+    //debugger;
+    //console.log(tiles);
 }
 fetchData();
     document.title = `clicked ${tiles} times`
       
-  }, [count]);
+  }, []);
 
 
   return (
@@ -224,7 +230,7 @@ fetchData();
                     title="Image title"
                   />
                   <CardContent className={classes.cardContent}>
-                    <Link style={{ color: 'inherit', textDecoration: 'inherit' }} to={"subject/" + card.id} >
+                    <Link style={{ color: 'inherit', textDecoration: 'inherit' }} to={ card.key} >
 
 
                       <Typography gutterBottom variant="h5" component="h2">
@@ -235,22 +241,20 @@ fetchData();
                     </Typography>
                     </Link>
                   </CardContent>
-                  <CardActions>
-                    <Button size="small" color="primary">
-                      View Subjects
-                    </Button>
-
-                  </CardActions>
+                  
                 </Card>
               </Grid>
             ))} 
           </Grid>
-          <Typography variant="h6" align="center" gutterBottom>
-          `clicked {count} times`
-        </Typography>
+         
         </Container>
       </main>
-      {/* Footer */}
+
+      
+      <Footer/>
+
+
+      {/* Footer 
       <footer className={classes.footer}>
         <Typography variant="h6" align="center" gutterBottom>
           Footer
@@ -260,7 +264,7 @@ fetchData();
         </Typography>
         <Copyright />
       </footer>
-      {/* End footer */}
+      End footer */}
     </React.Fragment>
   );
 }

@@ -4,8 +4,9 @@ import './App.css';
 import './Classes';
 import Classes from './Classes';
 //import Subjects from './Subjects';
-import Landing from './Landing/Landing';
+import Landing from './landing/Landing';
 import Subjects from './categories/Subjects';
+import Deweys from './categories/Deweys';
 
 import {
   BrowserRouter as Router,
@@ -18,13 +19,17 @@ function App() {
   return (
     <div className="App">
       <Router>
-      
-
-
       <Switch>
           <Route path="/subject">
            <Subjects></Subjects>
           </Route>
+          <Route exact path="/book">
+           <Deweys></Deweys>
+          </Route>
+          <Route  path="/book/:id" component={Subjects}>
+           
+          </Route>
+
           <Route path="/users">
          
           </Route>
